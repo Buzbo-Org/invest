@@ -614,6 +614,19 @@ section {
 
 /* Responsive */
 @media (max-width: 768px) {
+  .swipe-hint {
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--amber);
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  
   .nav-links { display: none; } /* Simplify for mobile for now */
   
   .thesis-grid, .product-container, .invest-terms {
@@ -648,8 +661,14 @@ section {
   #intro .container { padding: 0 1rem; }
   .section-title { font-size: 2rem; }
   
-  #proof { padding: 8rem 0 3rem 0 !important; }
-  #proof .section-header { margin-bottom: 5rem !important; }
+  #proof { 
+      padding: 3rem 0 3rem 0 !important; 
+  }
+  #proof .section-header { margin-bottom: 6rem !important; }
+  
+  .proof-stats {
+      transform: scale(0.65) !important;
+  }
   
   /* Ask section grid stacking */
   #invest .container > div[style*="display: grid"] {
@@ -670,5 +689,28 @@ section {
   /* Fix text alignments to be more mobile friendly */
   h2, h3 { line-height: 1.2 !important; }
   
+  .invest-terms-row {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 0.5rem !important;
+  }
+
+  .faq-grid {
+      grid-template-columns: 1fr !important;
+  }
+  
+  .faq-question {
+      font-size: 1.1rem;
+      line-height: 1.3;
+      align-items: flex-start;
+  }
+  
+  .faq-question span {
+      margin-left: 1rem;
+      flex-shrink: 0;
+  }
+  
   .footer-links { flex-direction: row; justify-content: center; gap: 2rem; }
 }
+
+.swipe-hint { display: none; }
