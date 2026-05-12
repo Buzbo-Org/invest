@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
         /* Extra inline overrides for the new sections */
@@ -73,6 +74,15 @@
             color: rgba(240, 236, 228, 0.6);
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WYM1Z0KRLM"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-WYM1Z0KRLM');
+    </script>
 </head>
 <body>
 
@@ -127,25 +137,25 @@
                 But work has changed. People want purpose, fit and growth.<br>Companies need people who actually match the team.<br>The current hiring process misses the human layer.
             </p>
             
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div class="problem-wrapper" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
                 <div>
                     <img src="1.png" alt="Broken Hiring" style="width: 100%; border: 4px solid var(--charcoal); filter: grayscale(20%);">
                 </div>
-                <div style="display: flex; flex-direction: column; gap: 2.5rem;">
+                <div class="swipe-on-mobile" style="display: flex; flex-direction: column; gap: 2.5rem;">
                     <div style="border-left: 4px solid var(--buzbo-red); padding-left: 1.5rem;">
-                        <h4 style="font-size: 3.5rem; margin-bottom: 0.5rem; color: var(--cream); line-height: 1;">100+</h4>
+                        <h4 style="font-size: 3.5rem; margin-bottom: 0.5rem; color: var(--cream); line-height: 1;">228</h4>
                         <p style="font-family: var(--font-heading); font-size: 1.25rem; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--cream);">Applications per vacancy.</p>
-                        <p style="font-size: 0.85rem; color: rgba(240, 236, 228, 0.5); margin: 0; line-height: 1.4;"><a href="#" target="_blank" style="color: rgba(240, 236, 228, 0.5); text-decoration: underline;">Source: Greenhouse / Axios (228 average) & Gem 2026 (93% more applications handled).</a></p>
+                        <p style="font-size: 0.85rem; color: rgba(240, 236, 228, 0.5); margin: 0; line-height: 1.4;"><a href="https://www.axios.com/2024/04/11/how-to-get-hired-new-job-greenhouse" target="_blank" style="color: rgba(240, 236, 228, 0.5); text-decoration: underline;">Source: Greenhouse / Axios</a></p>
                     </div>
                     <div style="border-left: 4px solid var(--buzbo-red); padding-left: 1.5rem;">
                         <h4 style="font-size: 3.5rem; margin-bottom: 0.5rem; color: var(--cream); line-height: 1;">89%</h4>
                         <p style="font-family: var(--font-heading); font-size: 1.25rem; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--cream);">Failures driven by culture-fit, not skills.</p>
-                        <p style="font-size: 0.85rem; color: rgba(240, 236, 228, 0.5); margin: 0; line-height: 1.4;"><a href="#" target="_blank" style="color: rgba(240, 236, 228, 0.5); text-decoration: underline;">Source: Leadership IQ.</a></p>
+                        <p style="font-size: 0.85rem; color: rgba(240, 236, 228, 0.5); margin: 0; line-height: 1.4;"><a href="https://www.leadershipiq.com/blogs/leadershipiq/35354241-why-new-hires-fail-emotional-intelligence-vs-skills" target="_blank" style="color: rgba(240, 236, 228, 0.5); text-decoration: underline;">Source: Leadership IQ.</a></p>
                     </div>
                     <div style="border-left: 4px solid var(--buzbo-red); padding-left: 1.5rem;">
-                        <h4 style="font-size: 3.5rem; margin-bottom: 0.5rem; color: var(--cream); line-height: 1;">22%</h4>
-                        <p style="font-family: var(--font-heading); font-size: 1.25rem; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--cream);">Expected to change jobs/reskill.</p>
-                        <p style="font-size: 0.85rem; color: rgba(240, 236, 228, 0.5); margin: 0; line-height: 1.4;"><a href="#" target="_blank" style="color: rgba(240, 236, 228, 0.5); text-decoration: underline;">Source: Global Workforce Index.</a></p>
+                        <h4 style="font-size: 2.25rem; margin-bottom: 0.5rem; color: var(--cream); line-height: 1;">46% / 85%</h4>
+                        <p style="font-family: var(--font-heading); font-size: 1.25rem; text-transform: uppercase; margin-bottom: 0.5rem; color: var(--cream);">Professionals considering leaving / looking for a new job.</p>
+                        <p style="font-size: 0.85rem; color: rgba(240, 236, 228, 0.5); margin: 0; line-height: 1.4;"><a href="https://www.microsoft.com/en-us/worklab/work-trend-index/ai-at-work-is-here-now-comes-the-hard-part" target="_blank" style="color: rgba(240, 236, 228, 0.5); text-decoration: underline;">Source: Microsoft Work Trend Index (46% worldwide / 85% US).</a></p>
                     </div>
                 </div>
             </div>
@@ -167,7 +177,7 @@
             <div>
                 <span class="label">APP IN DEVELOPMENT</span>
                 <h2 class="section-title">Less applying. More connecting.</h2>
-                <div class="product-steps">
+                <div class="product-steps swipe-on-mobile">
                     <div class="step">
                         <div class="step-num">1</div>
                         <div class="step-content">
@@ -205,7 +215,7 @@
                     </div>
                 </div>
             </div>
-            <div class="product-visual" style="background-image: url('Product\ example.png'); background-size: contain; background-repeat: no-repeat; background-position: center; border: none; background-color: transparent; min-height: 500px;"></div>
+            <img src="Product example.png" alt="Product Interface" class="product-visual" style="width: 100%; height: auto; display: block; margin: 0 auto; max-width: 500px;">
         </div>
     </section>
 
@@ -223,7 +233,7 @@
                 <span class="label" style="background-color: var(--buzbo-red); color: var(--cream); border: none;">TRACTION</span>
                 <h2 class="section-title" style="text-shadow: 2px 2px 10px rgba(0,0,0,0.8);">The market is responding.</h2>
             </div>
-            <div class="proof-stats" style="transform: scale(0.85); transform-origin: bottom center; margin-bottom: 0;">
+            <div class="proof-stats swipe-on-mobile" style="transform: scale(0.85); transform-origin: bottom center; margin-bottom: 0;">
                 <div class="proof-stat" style="background: rgba(20,20,20,0.8); padding: 2rem 4rem; border: 1px solid var(--buzbo-red);">
                     <h4>1</h4>
                     <p>First Event</p>
@@ -247,7 +257,7 @@
             <h2 class="section-title">BUILT ON BELIEF.</h2>
             <img src="Founders.png" alt="Buzbo Founders" class="team-image" style="max-width: 600px;">
             
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; text-align: left;">
+            <div class="swipe-on-mobile" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; text-align: left;">
                 <div style="background: rgba(242,237,228,0.05); padding: 2rem; border-top: 2px solid var(--buzbo-red); display: flex; flex-direction: column;">
                     <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-size: 1.5rem; text-transform: none;">Anouk Horrevorts</h3>
                     <p style="color: var(--amber); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">CEO</p>
@@ -283,33 +293,33 @@
                 <h2 class="section-title">A MASSIVE, SHIFTING LANDSCAPE.</h2>
             </div>
             
-            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+            <div class="swipe-on-mobile" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
                 <div class="market-card">
                     <h4>1.2B</h4>
                     <h5>Professional Identity TAM</h5>
                     <p>Total LinkedIn members globally. The ultimate professional networking market size.</p>
-                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="#" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: MICROSOFT</a></p>
+                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="https://datareportal.com/essential-linkedin-stats" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: MICROSOFT</a></p>
                 </div>
                 
                 <div class="market-card">
                     <h4>275M+</h4>
                     <h5>Job-Seeking Intent</h5>
                     <p>Members privately "Open to Work" since 2020, plus 68M publicly open.</p>
-                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="#" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: LINKEDIN FEATURE DATA</a></p>
+                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="https://economictimes.indiatimes.com/wealth/earn/your-linkedin-profile-is-set-to-opentowork-but-one-small-settings-mistake-is-making-recruiters-skip-right-past-you/68-million-people-have-the-opentowork-banner-on-linkedin-is-it-helping-them-or-hurting-them/slideshow/129942796.cms" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: LINKEDIN FEATURE DATA</a></p>
                 </div>
                 
                 <div class="market-card">
-                    <h4>3.67M</h4>
+                    <h4>3.7M</h4>
                     <h5>Paid Social Matching</h5>
                     <p>Average Bumble Inc. paying users. Proven willingness to pay for curated discovery.</p>
-                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="#" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: BUMBLE</a></p>
+                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="https://ir.bumble.com/news/news-details/2026/Bumble-Inc--Announces-Fourth-Quarter-and-Full-Year-2025-Results/default.aspx" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: BUMBLE</a></p>
                 </div>
                 
                 <div class="market-card" style="border-top-color: var(--amber);">
                     <h4>70%</h4>
                     <h5>The AI Tailwind</h5>
                     <p>Of skills used in most jobs will completely change by 2030. Professionals must reposition themselves.</p>
-                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="#" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: WORK TREND INDEX</a></p>
+                    <p style="font-size: 0.75rem; color: var(--amber); margin-top: 1rem;"><a href="https://assets-c4akfrf5b4d3f4b7.z01.azurefd.net/assets/2025/04/2025_Work_Trend_Index_Annual_Report_680aaa7fe52dd.pdf" target="_blank" style="color: var(--amber); text-decoration: underline;">SOURCE: WORK TREND INDEX</a></p>
                 </div>
             </div>
         </div>
@@ -323,7 +333,7 @@
                 <h2 class="section-title">Events build the network.</h2>
                 <p class="event-intro">Why events? Events create trust, local density, content, and app conversion. This is the repeatable city playbook.</p>
             </div>
-            <div class="events-grid">
+            <div class="events-grid swipe-on-mobile">
                 <!-- Netherlands -->
                 <div class="event-card">
                     <div class="event-country">The Netherlands</div>
@@ -425,7 +435,7 @@
                 <h2 class="section-title">The Path Forward</h2>
             </div>
             
-            <div class="model-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: stretch;">
+            <div class="model-grid swipe-on-mobile" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: stretch;">
                 <div style="background-color: var(--charcoal); padding: 3rem; border-top: 4px solid var(--buzbo-red);">
                     <h3 style="color: var(--cream); margin-bottom: 1rem; font-size: 2rem;">NOW</h3>
                     <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">&bull; App live</p>
@@ -459,7 +469,7 @@
     <section id="invest" style="background-color: var(--charcoal); padding-top: 6rem; padding-bottom: 6rem;">
         <div class="container">
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 6rem; align-items: stretch;">
-                <div style="background-image: url('5.png'); background-size: contain; background-repeat: no-repeat; background-position: center; border: 4px solid var(--dark-grey); filter: grayscale(10%); height: auto; min-height: 400px;"></div>
+                <img src="5.png" alt="The Ask" style="width: 100%; height: auto; border: 4px solid var(--dark-grey); filter: grayscale(10%); box-sizing: border-box; display: block; object-fit: contain;">
                 
                 <div>
                     <span class="label" style="background-color: var(--cream); color: var(--buzbo-red); width: fit-content;">THE ASK</span>
@@ -678,11 +688,11 @@
                 <a href="mailto:hello@buzbo.com" class="btn btn-outline">Book a founder call</a>
             </div>
             <div class="footer-links">
-                <a href="https://www.buzbo.com/" target="_blank">Buzbo.com</a>
-                <a href="mailto:hello@buzbo.com">hello@buzbo.com</a>
-                <a href="https://www.linkedin.com/in/anouk-horrevorts-76a5b542/" target="_blank">LinkedIn</a>
-                <a href="https://www.instagram.com/joinbuzbo/" target="_blank">Instagram</a>
-                <a href="https://www.tiktok.com/@joinbuzbo" target="_blank">TikTok</a>
+                <a href="https://www.buzbo.com/" target="_blank" aria-label="Website"><i class="fa-solid fa-globe" style="font-size: 1.5rem;"></i></a>
+                <a href="mailto:hello@buzbo.com" aria-label="Email"><i class="fa-solid fa-envelope" style="font-size: 1.5rem;"></i></a>
+                <a href="https://www.linkedin.com/in/anouk-horrevorts-76a5b542/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" style="font-size: 1.5rem;"></i></a>
+                <a href="https://www.instagram.com/joinbuzbo/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram" style="font-size: 1.5rem;"></i></a>
+                <a href="https://www.tiktok.com/@joinbuzbo" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok" style="font-size: 1.5rem;"></i></a>
             </div>
         </div>
     </section>

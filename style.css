@@ -348,11 +348,13 @@ section {
 }
 
 .product-visual {
-  background-image: url('4.png');
-  background-size: cover;
-  background-position: center;
-  border: 1px solid rgba(242, 237, 228, 0.1);
-  min-height: 400px;
+  display: block;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  align-self: center;
+  justify-self: center;
 }
 
 /* Proof Section */
@@ -613,10 +615,60 @@ section {
 /* Responsive */
 @media (max-width: 768px) {
   .nav-links { display: none; } /* Simplify for mobile for now */
-  .thesis-grid, .product-container, .model-grid, .invest-terms {
-    grid-template-columns: 1fr;
+  
+  .thesis-grid, .product-container, .invest-terms {
+    grid-template-columns: 1fr !important;
   }
-  .hero-title { font-size: 2.5rem; }
-  .proof-stats { flex-direction: column; gap: 2rem; }
-  .invest-box { padding: 2rem; }
+  
+  .hero-title { font-size: 2.5rem; white-space: normal !important; line-height: 1.1; }
+  
+  .swipe-on-mobile {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    gap: 1.5rem !important;
+    padding-bottom: 2rem !important;
+    margin-bottom: 1rem !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .swipe-on-mobile::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
+
+  .swipe-on-mobile > * {
+    flex: 0 0 85% !important; /* Take up most of the screen but peek the next */
+    scroll-snap-align: center !important;
+  }
+  
+  /* Additional layout overrides to prevent long pages */
+  #intro .container { padding: 0 1rem; }
+  .section-title { font-size: 2rem; }
+  
+  #proof { padding: 8rem 0 3rem 0 !important; }
+  #proof .section-header { margin-bottom: 5rem !important; }
+  
+  /* Ask section grid stacking */
+  #invest .container > div[style*="display: grid"] {
+      grid-template-columns: 1fr !important;
+      gap: 2rem !important;
+  }
+  #invest .container > div[style*="display: grid"] > img:first-child {
+      min-height: auto !important;
+      max-height: 50vh;
+      margin: 0 auto;
+  }
+  
+  /* Fix problem grid stacking */
+  .problem-wrapper {
+      grid-template-columns: 1fr !important;
+  }
+  
+  /* Fix text alignments to be more mobile friendly */
+  h2, h3 { line-height: 1.2 !important; }
+  
+  .footer-links { flex-direction: row; justify-content: center; gap: 2rem; }
 }
