@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buzbo App | Interactive Prototype</title>
+  <style>
+    :root { 
+      --primary: #8E0928; 
+      --bg-warm: #FFECD2; 
+      --white: #FFFFFF; 
+    }
+    body {
+      font-family: 'Helvetica', Arial, sans-serif;
+      margin: 0; padding: 40px; background: #E5E5E5;
+      padding-top: 80px; /* Space for nav bar */
+    }
+    .bold { font-weight: 700; }
+    .light { font-weight: 300; }
+    .ultralight { font-weight: 100; }
+
+    /* Screen Picker Navigation */
+    #screen-picker {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: var(--white);
+      height: 50px;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 12px;
+      overflow-x: auto;
+      z-index: 9999;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .nav-btn {
+      font-size: 11px;
+      font-weight: 700;
+      color: #999;
+      background: none;
+      border: 1px solid #EEE;
+      border-radius: 999px;
+      padding: 6px 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .nav-btn.active {
+      color: var(--white);
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .grid-container {
+      display: flex; flex-wrap: wrap; gap: 40px; justify-content: center;
+      max-width: 1300px; margin: 0 auto;
+    }
+    .phone-wrapper {
+      width: 375px; height: 812px; position: relative;
+      background: var(--white); box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-radius: 40px; overflow: hidden; border: 8px solid #333;
+      flex-shrink: 0; display: none; flex-direction: column;
+      color: #000; box-sizing: border-box;
+    }
+    .phone-wrapper.active-screen {
+      display: flex;
+    }
+
+    .pill-button {
+      border-radius: 999px; padding: 16px 24px; font-weight: 700;
+      text-align: center; border: none; font-size: 16px;
+      display: flex; justify-content: center; align-items: center; gap: 12px;
+      font-family: inherit; width: 100%; box-sizing: border-box;
+      cursor: pointer;
+    }
+    .text-link {
+      color: var(--primary); text-align: center;
+      font-size: 16px; font-weight: 300; margin-top: 16px;
+      cursor: pointer;
+    }
+    .back-arrow {
+      cursor: pointer; z-index: 10;
+    }
+
+    /* Screen 4B List Row */
+    .list-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 16px 0;
+    }
+    .list-left { display: flex; align-items: center; gap: 16px; }
+    .list-icon { font-size: 20px; width: 24px; text-align: center; }
+    .list-label { font-size: 16px; font-weight: 400; color: #000; }
+    .list-right { display: flex; align-items: center; gap: 8px; }
+    .list-value { font-size: 16px; font-weight: 400; color: #8E8E93; }
+    .list-arrow { font-size: 14px; font-weight: 400; color: #8E8E93; }
+
+    /* Cinematic screens */
+    .bg-image { background-size: cover; background-position: center; color: var(--white); }
+    .dark-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); z-index: 0; }
+    .content-z { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
+    
+    .cinematic-chip {
+      padding: 12px 20px; border-radius: 999px; font-weight: 400; font-size: 14px;
+      background: rgba(255,255,255,0.2); color: var(--white);
+      border: 1px solid rgba(255,255,255,0.4); margin-bottom: 8px; 
+      display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer;
+    }
+    .cinematic-chip.selected { background: var(--white); color: #000; border-color: var(--white); }
+    .emoji-circle {
+      width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,0.5); 
+      display: flex; justify-content: center; align-items: center; font-size: 12px; color: #FFF; margin-left: 8px;
+    }
+    .cinematic-chip.selected .emoji-circle { background: #000; }
+
+    /* Profile Pill Accordion */
+    .skill-pill {
+      width: 100%; padding: 16px 24px; border-radius: 999px; font-weight: 700; font-size: 14px; letter-spacing: 0.5px;
+      margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; box-sizing: border-box; color: #000;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .pill-content-wrapper {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+    .pill-content {
+      padding: 0 16px 24px 16px; font-weight: 300; font-size: 14px; color: #333; line-height: 1.5;
+    }
+
+    /* Bottom Navs */
+    .bottom-bar {
+      position: absolute; bottom: 0; left: 0; right: 0; background: var(--white); 
+      display: flex; align-items: center; border-top: 1px solid #EEE; z-index: 10;
+    }
+    
+    .fixed-bottom-btns {
+      display: flex; gap: 12px; padding: 16px 24px; width: 100%; box-sizing: border-box;
+    }
+
+    .main-nav-bar {
+      height: 64px; justify-content: space-around; padding-bottom: 10px;
+    }
+    .nav-tab {
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      color: #999; cursor: pointer; flex: 1; height: 100%;
+    }
+    .nav-tab.active { color: var(--primary); }
+    .nav-tab-icon { font-size: 20px; }
+    .nav-tab-label { font-size: 10px; font-weight: 100; }
+
+    /* Connect Apps Screen */
+    .app-row {
+      display: flex; justify-content: space-between; align-items: center;
+      height: 64px; border-bottom: 1px solid #F0F0F0;
+    }
+    .app-icon {
+      width: 36px; height: 36px; border-radius: 8px; display: flex; justify-content: center; align-items: center;
+      color: white; font-weight: 700; font-size: 16px; flex-shrink: 0;
+    }
+    .app-info { flex-grow: 1; margin: 0 12px; }
+    .app-name { font-size: 15px; font-weight: 700; color: #000; }
+    .app-desc { font-size: 13px; font-weight: 300; color: #999; }
+    
+    .toggle-switch {
+      width: 44px; height: 24px; border-radius: 999px; background: #E0E0E0;
+      position: relative; cursor: pointer; transition: background 0.3s; flex-shrink: 0;
+    }
+    .toggle-switch.on { background: var(--primary); }
+    .toggle-circle {
+      width: 20px; height: 20px; border-radius: 50%; background: white;
+      position: absolute; top: 2px; left: 2px; transition: transform 0.3s;
+    }
+    .toggle-switch.on .toggle-circle { transform: translateX(20px); }
+
+    /* Matching Feed */
+    .filter-chips {
+      display: flex; gap: 8px; overflow-x: auto; padding: 16px 24px;
+      scrollbar-width: none;
+    }
+    .filter-chips::-webkit-scrollbar { display: none; }
+    .filter-chip {
+      background: var(--bg-warm); color: var(--primary); border-radius: 999px;
+      padding: 6px 16px; font-size: 13px; font-weight: 700; white-space: nowrap; cursor: pointer;
+    }
+    .filter-chip.active { background: var(--primary); color: white; }
+
+    .feed-cards { position: relative; height: 500px; margin: 24px; perspective: 1000px; }
+    .feed-card {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: white; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease; cursor: pointer; overflow: hidden;
+    }
+    .feed-card.card-1 { z-index: 3; transform: translateY(0) scale(1); }
+    .feed-card.card-2 { z-index: 2; transform: translateY(-10px) scale(0.96); opacity: 0.8; }
+    .feed-card.card-3 { z-index: 1; transform: translateY(-20px) scale(0.92); opacity: 0.5; }
+
+    /* Chat Screen */
+    .chat-bubble {
+      max-width: 80%; font-size: 15px; font-weight: 300; padding: 12px 16px; margin-bottom: 16px;
+      line-height: 1.4;
+    }
+    .chat-sent {
+      background: var(--primary); color: white; align-self: flex-end;
+      border-radius: 18px 18px 4px 18px; margin-left: auto;
+    }
+    .chat-received {
+      background: var(--bg-warm); color: #1A1A1A; align-self: flex-start;
+      border-radius: 18px 18px 18px 4px;
+    }
+
+    /* Hide scrollbar */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { scrollbar-width: none; }
+    
+    /* Horizontal scroll for Proud Work */
+    .h-scroll {
+      display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none;
+    }
+    .h-scroll::-webkit-scrollbar { display: none; }
+
+  </style>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Shift screen picker down to clear sticky navbar */
+    #screen-picker {
+      top: 70px !important;
+      background-color: var(--charcoal) !important;
+      border-bottom: 1px solid rgba(242, 237, 228, 0.1) !important;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+      padding: 10px 20px !important;
+      height: auto !important;
+    }
+    .nav-btn {
+      border: 1px solid rgba(242, 237, 228, 0.15) !important;
+      color: rgba(242, 237, 228, 0.6) !important;
+      background: none !important;
+    }
+    .nav-btn.active {
+      color: #FFF !important;
+      background: var(--primary) !important;
+      border-color: var(--primary) !important;
+    }
+    body {
+      padding-top: 150px !important; /* clear nav + screen picker */
+      background-color: var(--dark-grey) !important;
+      font-family: 'Outfit', sans-serif !important;
+      color: var(--text-light) !important;
+    }
+    .grid-container {
+      margin-top: 20px !important;
+      margin-bottom: 50px !important;
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Sticky Navigation -->
+  <nav>
+      <div class="container nav-content">
+          <a href="index.html" class="nav-brand"><img src="Logo3.png" alt="Buzbo logo" style="height: 2rem;"/></a>
+          <div class="nav-links">
+              <a href="team.html">Team</a>
+              <a href="events.html">Traction</a>
+              <a href="app.html" class="active">App Prototype</a>
+              <a href="index.html#invest" class="nav-cta">Invest</a>
+          </div>
+      </div>
+  </nav>
+
+
+<div id="screen-picker">
+  <button class="nav-btn active" onclick="showScreen('screen-splash')">1. Splash</button>
+  <button class="nav-btn" onclick="showScreen('screen-welcome')">2. Welcome</button>
+  <button class="nav-btn" onclick="showScreen('screen-signin')">3. Sign In</button>
+  <button class="nav-btn" onclick="showScreen('screen-linkedin')">4. LinkedIn</button>
+  <button class="nav-btn" onclick="showScreen('screen-general')">5. General Info</button>
+  <button class="nav-btn" onclick="showScreen('screen-name')">6. Name</button>
+  <button class="nav-btn" onclick="showScreen('screen-search')">7. What I Search</button>
+  <button class="nav-btn" onclick="showScreen('screen-company')">8. Company Prefs</button>
+  <button class="nav-btn" onclick="showScreen('screen-logistics')">9. Logistics</button>
+  <button class="nav-btn" onclick="showScreen('screen-proud')">10. Proud Work</button>
+  <button class="nav-btn" onclick="showScreen('screen-apps')">11. Connect Apps</button>
+  <button class="nav-btn" onclick="showScreen('screen-profile')">12. Profile Card</button>
+  <button class="nav-btn" onclick="showScreen('screen-feed')">13. Feed</button>
+  <button class="nav-btn" onclick="showScreen('screen-handshake')">14. Handshake</button>
+  <button class="nav-btn" onclick="showScreen('screen-chat')">15. Chat</button>
+  <button class="nav-btn" onclick="showScreen('screen-ai')">16. AI Engine</button>
+</div>
+
+<div class="grid-container">
+
+  <!-- SCREEN 1: Splash -->
+  <div id="screen-splash" class="phone-wrapper active-screen" style="justify-content: center; align-items: center;">
+    <div class="bold" style="color: var(--primary); font-size: 48px; letter-spacing: -1px; text-transform: uppercase;">Buzbo</div>
+    <div class="ultralight" style="color: var(--primary); font-size: 14px; margin-top: 16px;">Get hired for who you are</div>
+  </div>
+
+  <!-- SCREEN 2: Welcome -->
+  <div id="screen-welcome" class="phone-wrapper" style="padding: 24px;">
+    <div style="text-align: center; margin-top: 40px; flex-grow: 1;">
+      <div class="bold" style="color: var(--primary); font-size: 32px; text-transform: uppercase;">Buzbo</div>
+      <div class="ultralight" style="color: var(--primary); font-size: 14px; margin-top: 8px;">Get hired for who you are</div>
+    </div>
+    <div style="margin-bottom: 32px;">
+      <div class="pill-button" style="background: var(--primary); color: var(--white);" onclick="showScreen('screen-signin')">Create account</div>
+      <div class="text-link" onclick="showScreen('screen-signin')">Sign in</div>
+    </div>
+    <div class="ultralight" style="font-size: 12px; text-align: center; color: #666; margin-bottom: 16px; line-height: 1.5;">
+      By continuing you agree to our Terms of Service<br>and Privacy Policy
+    </div>
+  </div>
+
+  <!-- SCREEN 3: Sign In -->
+  <div id="screen-signin" class="phone-wrapper" style="padding: 24px; padding-bottom: 40px;">
+    <div class="back-arrow" style="margin-top: 16px; color: #000;" onclick="showScreen('screen-welcome')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    <div style="flex-grow: 1;"></div>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="position: relative;">
+        <div class="bold" style="position: absolute; top: -10px; right: 16px; background: var(--bg-warm); color: var(--primary); font-size: 10px; padding: 4px 8px; border-radius: 999px; z-index: 2;">RECOMMENDED</div>
+        <div class="pill-button" style="background: var(--primary); color: var(--white); height: 52px;" onclick="showScreen('screen-linkedin')">Continue with LinkedIn</div>
+      </div>
+      <div class="pill-button" style="background: var(--white); color: #000; border: 1px solid #000; height: 52px;" onclick="showScreen('screen-linkedin')">Continue with Apple</div>
+      <div class="pill-button" style="background: var(--white); color: #000; border: 1px solid #DDD; height: 52px;" onclick="showScreen('screen-linkedin')">Continue with Google</div>
+      <div class="pill-button" style="background: var(--white); color: var(--primary); border: 1px solid var(--primary); height: 52px;" onclick="showScreen('screen-linkedin')">Continue with phone number</div>
+    </div>
+    <div class="text-link" style="color: #000;" onclick="showScreen('screen-welcome')">Back</div>
+  </div>
+
+  <!-- SCREEN 4a: LinkedIn -->
+  <div id="screen-linkedin" class="phone-wrapper" style="padding: 24px; display: flex; flex-direction: column; justify-content: center;">
+    <div class="back-arrow" style="position: absolute; top: 24px; left: 24px;" onclick="showScreen('screen-signin')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    <div style="text-align: center; margin-bottom: 40px; margin-top: 60px;">
+      <svg width="60" height="60" viewBox="0 0 24 24" fill="var(--primary)"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+    </div>
+    <div class="bold" style="font-size: 24px; text-align: center; margin-bottom: 24px; color: var(--primary);">Link your professional identity</div>
+    <div class="light" style="font-size: 16px; text-align: center; margin-bottom: 48px; line-height: 1.5; color: #444;">
+      Allow Buzbo to access your LinkedIn profile to automatically build your rich Buzbo profile. We only extract your experience, skills, and education.
+    </div>
+    <div class="pill-button" style="background: var(--primary); color: var(--white); margin-bottom: 16px;" onclick="showScreen('screen-general')">Agree & Build Profile</div>
+    <div class="text-link" style="color: #666; font-size: 14px; margin-top:0;" onclick="showScreen('screen-general')">Skip, I'll enter manually</div>
+  </div>
+
+  <!-- SCREEN 4b: General Info -->
+  <div id="screen-general" class="phone-wrapper" style="padding: 24px; padding-bottom: 100px;">
+    <div class="back-arrow" style="position: absolute; top: 24px; left: 24px;" onclick="showScreen('screen-linkedin')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    <div class="bold" style="font-size: 22px; text-align: center; margin-top: 12px; margin-bottom: 40px; text-transform: uppercase;">Buzbo</div>
+    <div class="bold" style="font-size: 20px; margin-bottom: 16px;">About me</div>
+    
+    <div class="list-row"><div class="list-left"><div class="list-icon">🎂</div><div class="list-label">Age</div></div><div class="list-right"><div class="list-value">34</div><div class="list-arrow">></div></div></div>
+    <div class="list-row"><div class="list-left"><div class="list-icon">🗣️</div><div class="list-label">Languages</div></div><div class="list-right"><div class="list-value">English, Dutch</div><div class="list-arrow">></div></div></div>
+    <div class="list-row"><div class="list-left"><div class="list-icon">🎓</div><div class="list-label">Education</div></div><div class="list-right"><div class="list-value">Add</div><div class="list-arrow">></div></div></div>
+    <div class="list-row"><div class="list-left"><div class="list-icon">🚻</div><div class="list-label">Gender</div></div><div class="list-right"><div class="list-value">Woman</div><div class="list-arrow">></div></div></div>
+    <div class="list-row"><div class="list-left"><div class="list-icon">📍</div><div class="list-label">Location</div></div><div class="list-right"><div class="list-value">London</div><div class="list-arrow">></div></div></div>
+
+    <div class="pill-button" style="background: var(--primary); color: var(--white); position: absolute; bottom: 32px; right: 24px; left: 24px; width:auto;" onclick="showScreen('screen-name')">Next</div>
+  </div>
+
+  <!-- SCREEN 5a -->
+  <div id="screen-name" class="phone-wrapper bg-image" style="background-image: url('1.png'); background-color: #333;">
+    <div class="dark-overlay"></div>
+    <div class="content-z" style="padding: 24px;">
+      <div class="back-arrow" style="position: absolute; top: 0; left: 0;" onclick="showScreen('screen-general')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </div>
+      <div style="margin-top: 60px;">
+        <div class="bold" style="font-size: 28px; margin-bottom: 24px;">What's your name?</div>
+        <div class="light" style="border-bottom: 1px solid rgba(255,255,255,0.5); font-size: 24px; padding-bottom: 8px;">Sophie Anderson</div>
+      </div>
+      <div style="flex-grow:1;"></div>
+      <div class="pill-button" style="background: var(--white); color: #000; margin-bottom: 16px;" onclick="showScreen('screen-search')">Next</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 5b1 -->
+  <div id="screen-search" class="phone-wrapper bg-image" style="background-image: url('2.png'); background-color: #333;">
+    <div class="dark-overlay"></div>
+    <div class="content-z" style="padding: 24px;">
+      <div class="back-arrow" style="position: absolute; top: 0; left: 0;" onclick="showScreen('screen-name')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </div>
+      <div style="margin-top: 60px;">
+        <div class="bold" style="font-size: 28px; margin-bottom: 8px;">What I search</div>
+        <div class="light" style="font-size: 16px; opacity: 0.8; margin-bottom: 32px;">You can always change or skip these later.</div>
+        
+        <div class="bold" style="font-size: 18px; margin-bottom: 16px;">I am looking for...</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;">
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Freelance</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Entrepreneurship</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Don't know yet</div>
+          <div class="cinematic-chip selected" onclick="this.classList.toggle('selected')">Payroll full time</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">New job challenge</div>
+        </div>
+        <div class="bold" style="font-size: 18px; margin-bottom: 16px;">How many hours?</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <div class="cinematic-chip selected" onclick="this.classList.toggle('selected')">Fulltime</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Parttime</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Flexible</div>
+        </div>
+      </div>
+      <div style="flex-grow:1;"></div>
+      <div class="pill-button" style="background: var(--white); color: #000; margin-bottom: 16px;" onclick="showScreen('screen-company')">Next</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 5b2 -->
+  <div id="screen-company" class="phone-wrapper bg-image" style="background-image: url('3.png'); background-color: #333;">
+    <div class="dark-overlay"></div>
+    <div class="content-z" style="padding: 24px; padding-bottom: 100px; overflow-y:auto;">
+      <div class="back-arrow" style="position: absolute; top: 0; left: 0;" onclick="showScreen('screen-search')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </div>
+      <div style="margin-top: 60px;">
+        <div class="bold" style="font-size: 28px; margin-bottom: 8px;">Company Preferences</div>
+        
+        <div class="bold" style="font-size: 18px; margin-top: 24px; margin-bottom: 16px;">Which company goal do you want to be part of?</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Revenue growth <div class="emoji-circle">❓</div></div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Internationalisation <div class="emoji-circle">❓</div></div>
+          <div class="cinematic-chip selected" onclick="this.classList.toggle('selected')">Social impact <div class="emoji-circle">❓</div></div>
+        </div>
+
+        <div class="bold" style="font-size: 18px; margin-top: 32px; margin-bottom: 16px;">What market is most interesting for you?</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          <div class="cinematic-chip selected" onclick="this.classList.toggle('selected')">💼 FMCG</div>
+          <div class="cinematic-chip selected" onclick="this.classList.toggle('selected')">🚀 Scale-up</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">🌐 Tech</div>
+        </div>
+      </div>
+    </div>
+    <div class="pill-button" style="background: var(--white); color: #000; position: absolute; bottom: 40px; left:24px; right:24px; width:auto; z-index: 2;" onclick="showScreen('screen-logistics')">Next</div>
+  </div>
+
+  <!-- SCREEN 5b3 -->
+  <div id="screen-logistics" class="phone-wrapper bg-image" style="background-image: url('4.png'); background-color: #333;">
+    <div class="dark-overlay"></div>
+    <div class="content-z" style="padding: 24px;">
+      <div class="back-arrow" style="position: absolute; top: 0; left: 0;" onclick="showScreen('screen-company')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </div>
+      <div style="margin-top: 60px;">
+        <div class="bold" style="font-size: 28px; margin-bottom: 32px;">Logistics</div>
+        
+        <div class="bold" style="font-size: 18px; margin-bottom: 16px;">Work area</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Open to relocate</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">I want to work abroad</div>
+        </div>
+        <div class="light" style="display: flex; align-items: center; gap: 12px; margin-bottom: 32px;">
+          Open to travel: <div style="border-bottom: 1px solid rgba(255,255,255,0.5);">20 %</div>
+        </div>
+
+        <div class="bold" style="font-size: 18px; margin-bottom: 16px;">Way of working</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px;">
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">Remote</div>
+          <div class="cinematic-chip" onclick="this.classList.toggle('selected')">On location</div>
+          <div class="cinematic-chip selected" onclick="this.classList.toggle('selected')">Hybrid</div>
+        </div>
+      </div>
+      <div style="flex-grow:1;"></div>
+      <div class="pill-button" style="background: var(--white); color: #000; margin-bottom: 16px;" onclick="showScreen('screen-proud')">Next</div>
+    </div>
+  </div>
+
+  <!-- SCREEN 5d -->
+  <div id="screen-proud" class="phone-wrapper bg-image" style="background-image: url('5.png'); background-color: #333;">
+    <div class="dark-overlay"></div>
+    <div class="content-z" style="padding: 24px;">
+      <div class="back-arrow" style="position: absolute; top: 0; left: 0;" onclick="showScreen('screen-logistics')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </div>
+      <div style="margin-top: 60px;">
+        <div class="bold" style="font-size: 28px; margin-bottom: 8px;">Proud Work</div>
+        <div class="light" style="font-size: 14px; margin-bottom: 24px; opacity: 0.8;">Add min 1, max 3 accomplishments.</div>
+        
+        <div style="background: rgba(255,255,255,0.1); padding: 16px; border-radius: 12px; position: relative; border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px);">
+          <div style="position: absolute; top: -12px; right: -12px; width: 36px; height: 36px; background: var(--white); color:#000; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3); font-size: 20px;">🏆</div>
+          <div style="border-bottom: 1px solid rgba(255,255,255,0.3); font-size: 16px; padding-bottom: 8px; margin-bottom: 16px; font-weight: 700;">Key Account Manager</div>
+          <div style="border-bottom: 1px solid rgba(255,255,255,0.3); font-size: 16px; padding-bottom: 8px; margin-bottom: 16px;">Green Goods</div>
+          <div style="border-bottom: 1px solid rgba(255,255,255,0.3); font-size: 16px; padding-bottom: 8px; margin-bottom: 16px;">Sales & Strategy</div>
+          
+          <div class="bold" style="font-size: 12px; margin-bottom: 8px; opacity: 0.8;">ADD PROOF</div>
+          <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+            <div class="cinematic-chip" style="font-size: 12px; padding: 6px 12px;">+ Referral</div>
+            <div class="cinematic-chip" style="font-size: 12px; padding: 6px 12px;">+ Pic/Video</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex-grow:1;"></div>
+      <div class="pill-button" style="background: var(--white); color: #000; margin-bottom: 16px;" onclick="showScreen('screen-apps')">Next</div>
+    </div>
+  </div>
+
+  <!-- NEW SCREEN A: Connect Apps -->
+  <div id="screen-apps" class="phone-wrapper" style="padding: 24px; padding-bottom: 100px; overflow-y:auto;">
+    <div class="back-arrow" style="margin-bottom: 24px;" onclick="showScreen('screen-proud')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    
+    <div class="bold" style="font-size: 22px; color: #1A1A1A; margin-bottom: 4px;">Connect your apps</div>
+    <div class="light" style="font-size: 14px; color: #999; margin-bottom: 32px;">Your matches get better. Your profile gets richer.</div>
+
+    <div class="app-row">
+      <div class="app-icon" style="background: #0077B5;">in</div>
+      <div class="app-info">
+        <div class="app-name">LinkedIn</div>
+        <div class="app-desc">Auto-fill your proud work</div>
+      </div>
+      <div class="toggle-switch on" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-icon" style="background: #FC4C02;">S</div>
+      <div class="app-info">
+        <div class="app-name">Strava</div>
+        <div class="app-desc">Running, cycling, discipline</div>
+      </div>
+      <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-icon" style="background: #E1306C;">IG</div>
+      <div class="app-info">
+        <div class="app-name">Instagram</div>
+        <div class="app-desc">Your life outside work</div>
+      </div>
+      <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-icon" style="background: #E60023;">P</div>
+      <div class="app-info">
+        <div class="app-name">Pinterest</div>
+        <div class="app-desc">Visual inspiration & taste</div>
+      </div>
+      <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-icon" style="background: #1DB954;">Sp</div>
+      <div class="app-info">
+        <div class="app-name">Spotify</div>
+        <div class="app-desc">What you listen to</div>
+      </div>
+      <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+    </div>
+    <div class="app-row" style="border:none;">
+      <div class="app-icon" style="background: #24292E;">GH</div>
+      <div class="app-info">
+        <div class="app-name">GitHub</div>
+        <div class="app-desc">For the builders</div>
+      </div>
+      <div class="toggle-switch" onclick="this.classList.toggle('on')"><div class="toggle-circle"></div></div>
+    </div>
+
+    <div style="flex-grow:1;"></div>
+    <div class="pill-button" style="background: var(--primary); color: var(--white); position: absolute; bottom: 32px; right: 24px; left: 24px; width:auto;" onclick="showScreen('screen-profile')">Continue</div>
+  </div>
+
+  <!-- SCREEN 7: Profile Card -->
+  <div id="screen-profile" class="phone-wrapper" style="background: #EFECE6; padding: 0;">
+    <div class="back-arrow" style="position: absolute; top: 24px; left: 24px; font-size: 24px; font-weight: 300; z-index:2;" onclick="showScreen('screen-apps')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    <div style="position: absolute; top: 24px; right: 24px; font-size: 24px; font-weight: 300; cursor: pointer; z-index:2;" onclick="showScreen('screen-feed')">✕</div>
+    
+    <div class="no-scrollbar" style="overflow-y: auto; height: 100%; padding: 32px 24px; padding-bottom: 140px; padding-top: 80px;">
+      <div style="display: flex; gap: 20px; margin-bottom: 32px;">
+        <div style="width: 120px; height: 160px; border-radius: 16px; background: var(--bg-warm); display: flex; justify-content: center; align-items: center; color: var(--primary); font-size: 32px; font-weight: 700;">SA</div>
+        <div style="flex: 1; display: flex; flex-direction: column;">
+          <div style="font-weight: 700; font-size: 32px; line-height: 1; letter-spacing: -1px; margin-bottom: 8px;">SOPHIE<br>ANDERSON</div>
+          <div class="light" style="font-size: 14px; text-transform: uppercase; color: #666;">34 · LONDON</div>
+          <div class="light" style="font-size: 14px; line-height: 1.4; margin-top: 16px; font-style: italic;">"Completely organised. 3 steps ahead."</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <!-- PROUD WORK -->
+        <div class="skill-pill" style="background: #98CA98;" onclick="toggleAccordion(this)">
+          <span>PROUD WORK</span><span class="acc-icon">+</span>
+        </div>
+        <div class="pill-content-wrapper">
+          <div class="pill-content h-scroll">
+            <div style="background: var(--primary); color: white; border-radius: 12px; padding: 12px; min-width: 140px; flex-shrink:0;">
+              <div class="bold" style="font-size: 14px; margin-bottom:4px;">Green Goods</div>
+              <div class="light" style="font-size: 12px;">Key Account Manager</div>
+              <div class="ultralight" style="font-size: 10px; margin-top:4px;">Nov 21 - Jan 24</div>
+            </div>
+            <div style="background: var(--primary); color: white; border-radius: 12px; padding: 12px; min-width: 140px; flex-shrink:0;">
+              <div class="bold" style="font-size: 14px; margin-bottom:4px;">Logistic BV</div>
+              <div class="light" style="font-size: 12px;">Sales Manager</div>
+              <div class="ultralight" style="font-size: 10px; margin-top:4px;">2020</div>
+            </div>
+            <div style="background: var(--primary); color: white; border-radius: 12px; padding: 12px; min-width: 140px; flex-shrink:0;">
+              <div class="bold" style="font-size: 14px; margin-bottom:4px;">Amsterdam Marathon</div>
+              <div class="light" style="font-size: 12px;">Finished + raised €1k for charity</div>
+              <div class="ultralight" style="font-size: 10px; margin-top:4px;">Oct 2022</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INTERESTS -->
+        <div class="skill-pill" style="background: #F0B5BC;" onclick="toggleAccordion(this)">
+          <span>INTERESTS</span><span class="acc-icon">+</span>
+        </div>
+        <div class="pill-content-wrapper">
+          <div class="pill-content" style="display: flex; gap: 16px;">
+            <div style="flex:1;">
+              <div class="bold" style="font-size:12px; margin-bottom:8px;">Professional</div>
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="background:var(--bg-warm); color:var(--primary); padding:6px 12px; border-radius:999px; font-size:12px; width:max-content;">Sustainability</div>
+                <div style="background:var(--bg-warm); color:var(--primary); padding:6px 12px; border-radius:999px; font-size:12px; width:max-content;">Innovation</div>
+                <div style="background:var(--bg-warm); color:var(--primary); padding:6px 12px; border-radius:999px; font-size:12px; width:max-content;">Running</div>
+              </div>
+            </div>
+            <div style="flex:1;">
+              <div class="bold" style="font-size:12px; margin-bottom:8px;">Weekend</div>
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div style="background:var(--bg-warm); color:var(--primary); padding:6px 12px; border-radius:999px; font-size:12px; width:max-content;">Nature</div>
+                <div style="background:var(--bg-warm); color:var(--primary); padding:6px 12px; border-radius:999px; font-size:12px; width:max-content;">Cooking</div>
+                <div style="background:var(--bg-warm); color:var(--primary); padding:6px 12px; border-radius:999px; font-size:12px; width:max-content;">Culture</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROMPTS -->
+        <div class="skill-pill" style="background: #A09AC9;" onclick="toggleAccordion(this)">
+          <span>PROMPTS</span><span class="acc-icon">+</span>
+        </div>
+        <div class="pill-content-wrapper">
+          <div class="pill-content" style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="background: var(--bg-warm); border-radius: 12px; padding: 16px;">
+              <div class="ultralight" style="color: #666; font-style: italic; font-size: 13px; margin-bottom: 6px;">Working with me is like…</div>
+              <div class="light" style="color: #1A1A1A; font-size: 14px;">Completely organised. I love to work as a project lead and think 3 steps ahead.</div>
+            </div>
+            <div style="background: var(--bg-warm); border-radius: 12px; padding: 16px;">
+              <div class="ultralight" style="color: #666; font-style: italic; font-size: 13px; margin-bottom: 6px;">I'm at my best with…</div>
+              <div class="light" style="color: #1A1A1A; font-size: 14px;">A strong positioning and mission with innovative products in different markets.</div>
+            </div>
+            <div style="background: var(--bg-warm); border-radius: 12px; padding: 16px;">
+              <div class="ultralight" style="color: #666; font-style: italic; font-size: 13px; margin-bottom: 6px;">My favourite coworker is…</div>
+              <div class="light" style="color: #1A1A1A; font-size: 14px;">The pragmatic optimist.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOOKING FOR -->
+        <div class="skill-pill" style="background: #9F3E3B; color: white;" onclick="toggleAccordion(this)">
+          <span>LOOKING FOR</span><span class="acc-icon">+</span>
+        </div>
+        <div class="pill-content-wrapper">
+          <div class="pill-content" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div style="background:var(--bg-warm); color:var(--primary); padding:8px 16px; border-radius:999px; font-size:13px;">Payroll full time</div>
+            <div style="background:var(--bg-warm); color:var(--primary); padding:8px 16px; border-radius:999px; font-size:13px;">Amsterdam NL</div>
+            <div style="background:var(--bg-warm); color:var(--primary); padding:8px 16px; border-radius:999px; font-size:13px;">Social Impact</div>
+            <div style="background:var(--bg-warm); color:var(--primary); padding:8px 16px; border-radius:999px; font-size:13px;">FMCG</div>
+            <div style="background:var(--bg-warm); color:var(--primary); padding:8px 16px; border-radius:999px; font-size:13px;">Scale-up</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="bottom-bar fixed-bottom-btns">
+      <button style="flex:1; height: 44px; border-radius: 999px; background: white; border: 1px solid var(--primary); color: var(--primary); font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer;" onclick="showScreen('screen-feed')">BuzDOWN</button>
+      <button style="flex:1; height: 44px; border-radius: 999px; background: var(--primary); border: none; color: white; font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer;" onclick="showScreen('screen-handshake')">BuzUP</button>
+    </div>
+  </div>
+
+  <!-- NEW SCREEN B: Matching Feed -->
+  <div id="screen-feed" class="phone-wrapper" style="background: #EFECE6; padding: 0;">
+    <div class="filter-chips">
+      <div class="filter-chip active">All</div>
+      <div class="filter-chip">Den Haag</div>
+      <div class="filter-chip">Amsterdam</div>
+      <div class="filter-chip">Scale-up</div>
+      <div class="filter-chip">Remote</div>
+    </div>
+
+    <div class="feed-cards">
+      <!-- Back Card -->
+      <div class="feed-card card-3">
+        <div style="width: 100%; height: 180px; background: #E5E5E5; display:flex; justify-content:center; align-items:center; color:#999; font-size:32px; font-weight:700;">LB</div>
+        <div style="padding: 20px;">
+          <div class="bold" style="font-size: 18px;">Lena Braun</div>
+          <div class="light" style="font-size: 14px; color: #666;">31 · Den Haag</div>
+        </div>
+      </div>
+
+      <!-- Middle Card -->
+      <div class="feed-card card-2" id="feed-card-2">
+        <div style="width: 100%; height: 180px; background: #D5E5D5; display:flex; justify-content:center; align-items:center; color:#333; font-size:32px; font-weight:700;">MV</div>
+        <div style="padding: 20px;">
+          <div class="bold" style="font-size: 18px;">Marcus de Vries</div>
+          <div class="light" style="font-size: 14px; color: #666;">29 · Amsterdam</div>
+          <div class="light" style="font-size: 14px; margin-top: 12px; font-style: italic;">"Working with me is like a creative sprint that actually ships."</div>
+          <div style="display:flex; gap:8px; margin-top:16px;">
+            <div style="background:var(--bg-warm); color:var(--primary); padding:4px 10px; border-radius:999px; font-size:11px;">Marketing</div>
+            <div style="background:var(--bg-warm); color:var(--primary); padding:4px 10px; border-radius:999px; font-size:11px;">Remote</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Front Card (Sophie) -->
+      <div class="feed-card card-1" id="feed-card-1">
+        <div style="width: 100%; height: 180px; background: var(--bg-warm); display:flex; justify-content:center; align-items:center; color:var(--primary); font-size:32px; font-weight:700;" onclick="showScreen('screen-profile')">SA</div>
+        <div style="padding: 20px;" onclick="showScreen('screen-profile')">
+          <div class="bold" style="font-size: 18px;">Sophie Anderson</div>
+          <div class="light" style="font-size: 14px; color: #666;">34 · London</div>
+          <div class="light" style="font-size: 14px; margin-top: 12px; font-style: italic;">"Completely organised. 3 steps ahead."</div>
+          
+          <div style="display:flex; gap:8px; margin-top:16px;">
+            <div style="background:var(--bg-warm); color:var(--primary); padding:4px 10px; border-radius:999px; font-size:11px;">Sustainability</div>
+            <div style="background:var(--bg-warm); color:var(--primary); padding:4px 10px; border-radius:999px; font-size:11px;">Innovation</div>
+            <div style="background:var(--bg-warm); color:var(--primary); padding:4px 10px; border-radius:999px; font-size:11px;">Running</div>
+          </div>
+        </div>
+        
+        <div style="position:absolute; bottom:20px; left:20px; right:20px; display:flex; gap:12px;">
+          <button style="flex:1; height: 44px; border-radius: 999px; background: white; border: 1px solid var(--primary); color: var(--primary); font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer;" onclick="document.getElementById('feed-card-1').style.display='none';">BuzDOWN</button>
+          <button style="flex:1; height: 44px; border-radius: 999px; background: var(--primary); border: none; color: white; font-family: inherit; font-weight: 700; font-size: 16px; cursor: pointer;" onclick="showScreen('screen-handshake')">BuzUP</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Bottom Nav -->
+    <div class="bottom-bar main-nav-bar">
+      <div class="nav-tab active" onclick="showScreen('screen-feed')">
+        <div class="nav-tab-icon">⌂</div>
+        <div class="nav-tab-label">Home</div>
+      </div>
+      <div class="nav-tab" onclick="showScreen('screen-feed')">
+        <div class="nav-tab-icon">♡</div>
+        <div class="nav-tab-label">Matches</div>
+      </div>
+      <div class="nav-tab" onclick="showScreen('screen-chat')">
+        <div class="nav-tab-icon">✉</div>
+        <div class="nav-tab-label">Chat</div>
+      </div>
+      <div class="nav-tab" onclick="showScreen('screen-ai')">
+        <div class="nav-tab-icon">👤</div>
+        <div class="nav-tab-label">Profile</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEW SCREEN C: Handshake -->
+  <div id="screen-handshake" class="phone-wrapper" style="background: var(--primary); color: white; padding: 24px; text-align: center; justify-content: center;">
+    <div class="light" style="font-size: 20px;">It's a</div>
+    <div class="bold" style="font-size: 40px; letter-spacing: -1px; margin-bottom: 24px;">Handshake!</div>
+    
+    <div class="light" style="font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 40px;">
+      You and Sophie both liked each other.
+    </div>
+
+    <div class="pill-button" style="background: white; color: var(--primary); margin-bottom: 16px;" onclick="showScreen('screen-chat')">Send a message</div>
+    <div class="pill-button" style="background: transparent; color: white; border: 1px solid white; font-weight: 300;" onclick="showScreen('screen-feed')">Keep browsing</div>
+  </div>
+
+  <!-- NEW SCREEN D: Chat -->
+  <div id="screen-chat" class="phone-wrapper" style="padding: 0; background: white;">
+    <!-- Header -->
+    <div style="height: 60px; border-bottom: 1px solid #EEE; display: flex; align-items: center; padding: 0 16px; position: absolute; top:0; left:0; right:0; z-index:10; background:white;">
+      <div class="back-arrow" onclick="showScreen('screen-feed')">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      </div>
+      <div class="bold" style="font-size: 16px; flex-grow: 1; text-align: center;">Sophie Anderson</div>
+      <div style="background: #0077B5; color: white; border-radius: 999px; font-size: 10px; font-weight: 700; padding: 2px 6px;">in</div>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages" class="no-scrollbar" style="flex-grow: 1; overflow-y: auto; padding: 16px; padding-top: 76px; padding-bottom: 76px; display: flex; flex-direction: column;">
+      
+      <div class="chat-bubble chat-received">
+        Hey! Really liked your profile — your approach to commercial impact sounds like exactly what we need.
+      </div>
+      <div class="chat-bubble chat-sent">
+        Thanks! I love what GreenStack is doing. Would love to learn more about the role.
+      </div>
+      <div class="chat-bubble chat-received">
+        Would you be open to a quick 20-minute call this week?
+      </div>
+      <div class="chat-bubble chat-sent">
+        Absolutely. Thursday or Friday works great for me!
+      </div>
+    </div>
+
+    <!-- Input Bar -->
+    <div style="height: 56px; border-top: 1px solid #EEE; position: absolute; bottom: 0; left: 0; right: 0; display: flex; align-items: center; padding: 8px 16px; box-sizing: border-box; background: white; z-index:10;">
+      <input type="text" id="chat-input" placeholder="Message Sophie…" style="flex-grow: 1; border: none; font-family: inherit; font-size: 15px; font-weight: 300; outline: none; background: transparent;">
+      <button style="width: 36px; height: 36px; border-radius: 50%; background: var(--primary); border: none; color: white; display: flex; justify-content: center; align-items: center; cursor: pointer; flex-shrink: 0;" onclick="sendChatMessage()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- NEW SCREEN E: AI Identity Engine -->
+  <div id="screen-ai" class="phone-wrapper" style="padding: 24px; overflow-y:auto; padding-bottom: 100px;">
+    <div class="back-arrow" style="margin-bottom: 24px;" onclick="showScreen('screen-feed')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </div>
+    
+    <div class="bold" style="font-size: 22px; color: #1A1A1A; margin-bottom: 8px;">Let your AI introduce you.</div>
+    <div class="light" style="font-size: 14px; color: #999; margin-bottom: 24px; line-height: 1.5;">
+      Open ChatGPT, Claude or Gemini. Ask it these 6 questions about yourself. Paste the answers here — Buzbo builds your profile automatically.
+    </div>
+
+    <button id="copy-btn" style="width:100%; border-radius:999px; background:white; border:1px solid var(--primary); color:var(--primary); font-family:inherit; font-weight:700; font-size:14px; padding:12px; margin-bottom:24px; cursor:pointer;" onclick="copyQuestions()">Copy all 6 questions</button>
+
+    <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:24px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+        <div class="bold" style="font-size:14px; width:20px;">1.</div>
+        <div class="light" style="font-size:14px; flex-grow:1; line-height:1.4;">Describe a day at work when I was completely in my element.</div>
+        <div class="bold" style="font-size:12px; color:var(--primary); cursor:pointer;">Copy</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+        <div class="bold" style="font-size:14px; width:20px;">2.</div>
+        <div class="light" style="font-size:14px; flex-grow:1; line-height:1.4;">What am I proud of that would never appear on my CV?</div>
+        <div class="bold" style="font-size:12px; color:var(--primary); cursor:pointer;">Copy</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+        <div class="bold" style="font-size:14px; width:20px;">3.</div>
+        <div class="light" style="font-size:14px; flex-grow:1; line-height:1.4;">What frustrates me most about how most companies operate?</div>
+        <div class="bold" style="font-size:12px; color:var(--primary); cursor:pointer;">Copy</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+        <div class="bold" style="font-size:14px; width:20px;">4.</div>
+        <div class="light" style="font-size:14px; flex-grow:1; line-height:1.4;">How do people who know me well describe my working style?</div>
+        <div class="bold" style="font-size:12px; color:var(--primary); cursor:pointer;">Copy</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+        <div class="bold" style="font-size:14px; width:20px;">5.</div>
+        <div class="light" style="font-size:14px; flex-grow:1; line-height:1.4;">Where am I in 5 years — honest version, not the polished one?</div>
+        <div class="bold" style="font-size:12px; color:var(--primary); cursor:pointer;">Copy</div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px;">
+        <div class="bold" style="font-size:14px; width:20px;">6.</div>
+        <div class="light" style="font-size:14px; flex-grow:1; line-height:1.4;">What kind of manager or team would bring out the best in me?</div>
+        <div class="bold" style="font-size:12px; color:var(--primary); cursor:pointer;">Copy</div>
+      </div>
+    </div>
+
+    <textarea placeholder="Paste your AI's answers here…" style="width:100%; height:160px; border:1px solid #E8E0D5; border-radius:12px; padding:16px; font-family:inherit; font-size:15px; font-weight:300; box-sizing:border-box; margin-bottom:24px; resize:none; outline:none;"></textarea>
+
+    <div id="ai-build-btn" class="pill-button" style="background: var(--primary); color: white; margin-bottom: 12px;" onclick="buildAiProfile()">Build my profile from this</div>
+
+    <div class="ultralight" style="font-size:11px; color:#999; text-align:center; margin-bottom:16px;">Your text is processed once and never stored.</div>
+    <div class="text-link" style="color:#999; font-size:14px; margin-top:0;" onclick="showScreen('screen-profile')">Skip</div>
+  </div>
+
+</div>
+
+<script>
+  // Navigation System
+  function showScreen(screenId) {
+    // Hide all screens
+    document.querySelectorAll('.phone-wrapper').forEach(el => {
+      el.classList.remove('active-screen');
+    });
+    // Show target screen
+    document.getElementById(screenId).classList.add('active-screen');
+
+    // Update picker active state
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.getAttribute('onclick').includes(screenId)) {
+        btn.classList.add('active');
+        // scroll picker to show active button
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    });
+  }
+
+  // Auto-advance Splash to Welcome after 1.5s
+  setTimeout(() => {
+    if (document.getElementById('screen-splash').classList.contains('active-screen')) {
+      showScreen('screen-welcome');
+    }
+  }, 1500);
+
+  // Accordion Logic
+  function toggleAccordion(pill) {
+    const wrapper = pill.nextElementSibling;
+    const icon = pill.querySelector('.acc-icon');
+    
+    // Check if currently open
+    const isOpen = wrapper.style.maxHeight && wrapper.style.maxHeight !== '0px';
+
+    if (isOpen) {
+      wrapper.style.maxHeight = '0px';
+      icon.textContent = '+';
+    } else {
+      wrapper.style.maxHeight = wrapper.scrollHeight + 'px';
+      icon.textContent = '-';
+    }
+  }
+
+  // Chat sending logic
+  function sendChatMessage() {
+    const input = document.getElementById('chat-input');
+    const text = input.value.trim();
+    if (!text) return;
+
+    const messagesContainer = document.getElementById('chat-messages');
+    
+    const bubble = document.createElement('div');
+    bubble.className = 'chat-bubble chat-sent';
+    bubble.textContent = text;
+    
+    messagesContainer.appendChild(bubble);
+    input.value = '';
+    
+    // Scroll to bottom
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  // Listen for Enter key in chat
+  document.getElementById('chat-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      sendChatMessage();
+    }
+  });
+
+  // AI Profile Logic
+  function copyQuestions() {
+    const btn = document.getElementById('copy-btn');
+    const originalText = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => {
+      btn.textContent = originalText;
+    }, 2000);
+  }
+
+  function buildAiProfile() {
+    const btn = document.getElementById('ai-build-btn');
+    btn.textContent = 'Building...';
+    setTimeout(() => {
+      btn.textContent = 'Build my profile from this';
+      showScreen('screen-profile');
+    }, 2000);
+  }
+</script>
+</body>
+</html>

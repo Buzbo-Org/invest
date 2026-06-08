@@ -89,14 +89,12 @@
     <!-- Sticky Navigation -->
     <nav>
         <div class="container nav-content">
-            <a href="#" class="nav-brand"><img src="Logo3.png" alt="Buzbo logo" style="height: 2rem;"/></a>
+            <a href="index.html" class="nav-brand"><img src="Logo3.png" alt="Buzbo logo" style="height: 2rem;"/></a>
             <div class="nav-links">
-                <a href="#intro">Thesis</a>
-                <a href="#product">Product</a>
-                <a href="#proof">Proof</a>
-                <a href="#market">Market</a>
-                <a href="#events">Events</a>
-                <a href="#invest">Invest</a>
+                <a href="team.html">Team</a>
+                <a href="events.html">Traction</a>
+                <a href="app.html">App Prototype</a>
+                <a href="index.html#invest" class="nav-cta">Invest</a>
             </div>
         </div>
     </nav>
@@ -108,9 +106,9 @@
     <section id="intro" style="padding-top: 6rem; padding-bottom: 4rem; text-align: center;">
         <div class="container" style="max-width: 1000px;">
             <div style="background-color: var(--buzbo-red); padding: 2rem; margin-top: 2rem; margin-bottom: 4rem; border: 1px solid rgba(242,237,228,0.2); border-radius: 4px; text-align: center;">
-                <h4 style="color: var(--cream); font-family: var(--font-heading); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 2px;">WE ARE RAISING NOW. THIS IS YOUR CHANCE.</h4>
+                <h4 style="color: var(--cream); font-family: var(--font-heading); font-size: 1.5rem; text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 2px;">WE ARE RAISING €300K. ONE INVESTOR. THIS IS YOUR CHANCE.</h4>
                 <p style="color: var(--cream); font-size: 1.1rem; max-width: 800px; margin: 0 auto; line-height: 1.6;">
-                    The team's ambition is massive and we won't stop until the impact is made. Our ultimate goal is to operate on a global scale, reach 35M+ users, and go public (IPO). You have the chance to be part of this journey right now, and this interactive dossier was built specifically for you.
+                    The team's ambition is massive and we won't stop until the impact is made. Our ultimate goal is to operate on a global scale, reach 35M+ users, and go public (IPO). We are raising €300K via a convertible SAFE — one strategic investor who believes in what we're building. This dossier was built specifically for you.
                 </p>
             </div>
 
@@ -123,7 +121,7 @@
                 We start with professionals.<br>Because when the right professionals gather, business managers follow.
             </p>
             <div class="hero-buttons" style="display: flex; gap: 1rem; justify-content: center; margin-top: 3rem;">
-                <a href="#problem" class="btn btn-primary">Open the file &darr;</a>
+                <button onclick="accessFinancials()" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer; border: none; font-family: inherit;">DOWNLOAD FINANCIAL MODEL <i class="fa-solid fa-lock" style="font-size: 0.85rem;"></i></button>
                 <a href="mailto:hello@buzbo.com" class="btn btn-outline" style="border-color: var(--charcoal); color: var(--cream); background-color: var(--charcoal);">Book a founder call</a>
             </div>
         </div>
@@ -236,54 +234,138 @@
             </div>
             <div class="proof-stats swipe-on-mobile" style="transform: scale(0.85); transform-origin: bottom center; margin-bottom: 0;">
                 <div class="proof-stat" style="background: rgba(20,20,20,0.8); padding: 2rem 4rem; border: 1px solid var(--buzbo-red);">
-                    <h4>1</h4>
-                    <p>First Event</p>
+                    <h4>2</h4>
+                    <p>Events Done</p>
                 </div>
                 <div class="proof-stat" style="background: rgba(20,20,20,0.8); padding: 2rem 4rem; border: 1px solid var(--buzbo-red);">
-                    <h4>70+</h4>
+                    <h4>120+</h4>
                     <p>Attendees</p>
                 </div>
                 <div class="proof-stat" style="background: rgba(20,20,20,0.8); padding: 2rem 4rem; border: 1px solid var(--buzbo-red);">
-                    <h4>+260</h4>
-                    <p>Waitlist</p>
+                    <h4>300+</h4>
+                    <p>Community</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Team -->
-    <section id="team" class="team-section">
+    <!-- Team (Full) Teaser -->
+    <section id="team-full" style="background-color: var(--charcoal); padding: 6rem 0;">
         <div class="container">
             <span class="label">THE TEAM</span>
-            <h2 class="section-title">BUILT ON BELIEF.</h2>
-            <img src="founders.jpeg" alt="Buzbo Founders" class="team-image" style="max-width: 600px;">
-            
-            <div class="swipe-hint"><i class="fa-solid fa-arrows-left-right"></i> Swipe to explore</div>
-            <div class="swipe-on-mobile" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem; text-align: left;">
-                <div style="background: rgba(242,237,228,0.05); padding: 2rem; border-top: 2px solid var(--buzbo-red); display: flex; flex-direction: column;">
-                    <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-size: 1.5rem; text-transform: none;">Anouk Horrevorts</h3>
-                    <p style="color: var(--amber); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">CEO</p>
-                    <p style="color: rgba(240, 236, 228, 0.7); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">Serial entrepreneur, former elite athlete and mission-driven founder building Buzbo to help as many people as possible get hired for who they truly are.</p>
-                    <a href="https://www.linkedin.com/in/anouk-horrevorts-76a5b542/" target="_blank" style="color: var(--cream); text-decoration: underline; font-size: 0.9rem;">LinkedIn &rarr;</a>
+            <h2 class="section-title" style="margin-bottom: 0.5rem;">BUILT ON BELIEF.</h2>
+            <p style="font-family: var(--font-heading); font-size: 1.3rem; color: var(--text-light); text-align: center; max-width: 700px; margin: 0 auto 3rem auto; text-transform: none; line-height: 1.5;">
+                We are a group of people who believe the world deserves better than keyword-filtered hiring. That shared mission is what keeps everyone showing up — unpaid, fully committed, building something real.
+            </p>
+
+            <!-- Co-founders -->
+            <div style="margin-bottom: 4rem;">
+                <span class="label" style="margin-bottom: 2rem; display: inline-block;">CO-FOUNDERS</span>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+                    <!-- Anouk -->
+                    <div style="background: rgba(242,237,228,0.04); border-top: 3px solid var(--buzbo-red); overflow: hidden;">
+                        <div style="height: 280px; overflow: hidden;">
+                            <img src="Team/ANouk - Cofounder.JPG" alt="Anouk Horrevorts" class="team-img" style="filter: grayscale(10%);">
+                        </div>
+                        <div style="padding: 1.75rem;">
+                            <h3 style="color: var(--cream); font-size: 1.5rem; text-transform: none; margin-bottom: 0.25rem;">Anouk Horrevorts</h3>
+                            <p style="color: var(--amber); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">CEO &amp; Co-Founder</p>
+                            <p style="color: rgba(240,236,228,0.7); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.25rem;">Serial entrepreneur with several businesses built. Former elite athlete. Now on her biggest mission yet — making impact at world scale by changing how people get hired for who they truly are.</p>
+                            <a href="https://www.linkedin.com/in/anouk-horrevorts-76a5b542/" target="_blank" style="color: var(--cream); text-decoration: underline; font-size: 0.85rem;">LinkedIn &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- Shinead -->
+                    <div style="background: rgba(242,237,228,0.04); border-top: 3px solid var(--buzbo-red); overflow: hidden;">
+                        <div style="height: 280px; overflow: hidden;">
+                            <img src="Team/Shinead - Cofounder.JPG" alt="Shinead Pond" class="team-img" style="filter: grayscale(10%);">
+                        </div>
+                        <div style="padding: 1.75rem;">
+                            <h3 style="color: var(--cream); font-size: 1.5rem; text-transform: none; margin-bottom: 0.25rem;">Shinead Pond</h3>
+                            <p style="color: var(--amber); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">Growth Manager &amp; Co-Founder</p>
+                            <p style="color: rgba(240,236,228,0.7); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.25rem;">Expert in marketing, community building, social media and campaigns. Deep lived experience of the problem Buzbo solves. Drives events, brand and organic growth from day one.</p>
+                            <a href="https://www.linkedin.com/in/shinead-pond-b4b589204/" target="_blank" style="color: var(--cream); text-decoration: underline; font-size: 0.85rem;">LinkedIn &rarr;</a>
+                        </div>
+                    </div>
+                    <!-- Tommy -->
+                    <div style="background: rgba(242,237,228,0.04); border-top: 3px solid var(--buzbo-red); overflow: hidden;">
+                        <div style="height: 280px; overflow: hidden; background: var(--dark-grey); display: flex; align-items: center; justify-content: center; padding: 2rem; box-sizing: border-box;">
+                            <img src="Logo3.png" alt="Buzbo Emblem" style="max-width: 100%; max-height: 100%; object-fit: contain; filter: opacity(0.3) brightness(1.2);">
+                        </div>
+                        <div style="padding: 1.75rem;">
+                            <h3 style="color: var(--cream); font-size: 1.5rem; text-transform: none; margin-bottom: 0.25rem;">Tommy</h3>
+                            <p style="color: var(--amber); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem;">CTO &amp; Co-Founder</p>
+                            <p style="color: rgba(240,236,228,0.7); font-size: 0.9rem; line-height: 1.6;">Expert in scaling software platforms. Has built applications that reached 60K+ users. Brings the architecture and engineering depth needed to turn Buzbo into a global platform.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meet the Crew CTA -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: rgba(240,236,228,0.5); font-size: 1rem; margin-bottom: 1.5rem; font-family: var(--font-heading); text-transform: none;">
+                    Want to see the full team slider and the rest of the crew?
+                </p>
+                <a href="team.html" class="btn btn-outline" style="border-color: var(--buzbo-red); color: var(--cream);">MEET THE FULL CREW &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUCCESS / EVENTS SECTION Teaser -->
+    <section id="success" style="background-color: var(--dark-grey); padding: 6rem 0;">
+        <div class="container">
+            <span class="label">TRACTION &amp; EVENTS</span>
+            <h2 class="section-title">THE MARKET IS RESPONDING.</h2>
+            <p style="font-family: var(--font-heading); font-size: 1.2rem; color: var(--text-light); text-align: center; max-width: 700px; margin: 0 auto 4rem auto; text-transform: none;">Two events down. Every one better than the last. The playbook works — and it's scaling.</p>
+
+            <!-- Event cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem;">
+                <!-- Event 1 -->
+                <div style="background: rgba(242,237,228,0.04); border-top: 4px solid var(--buzbo-red); padding: 2.5rem; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 1.5rem; right: 1.5rem; background: var(--buzbo-red); color: var(--cream); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; padding: 0.3rem 0.75rem;">DONE</div>
+                    <h3 style="font-size: 3.5rem; color: var(--cream); line-height: 1; margin-bottom: 0.25rem; font-family: var(--font-heading);">01</h3>
+                    <p style="color: var(--amber); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">The Hague — April 30</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(242,237,228,0.08); padding-bottom: 0.75rem;">
+                            <span style="color: rgba(240,236,228,0.5); font-size: 0.85rem;">Registrations</span>
+                            <span style="color: var(--cream); font-size: 1.5rem; font-family: var(--font-heading); font-weight: 700;">130</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(242,237,228,0.08); padding-bottom: 0.75rem;">
+                            <span style="color: rgba(240,236,228,0.5); font-size: 0.85rem;">Attendees</span>
+                            <span style="color: var(--cream); font-size: 1.5rem; font-family: var(--font-heading); font-weight: 700;">60</span>
+                        </div>
+                    </div>
                 </div>
 
-                <div style="background: rgba(242,237,228,0.05); padding: 2rem; border-top: 2px solid var(--buzbo-red); display: flex; flex-direction: column;">
-                    <h3 style="color: var(--cream); margin-bottom: 0.5rem; font-size: 1.5rem; text-transform: none;">Shinead Pond</h3>
-                    <p style="color: var(--amber); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">Growth Manager</p>
-                    <p style="color: rgba(240, 236, 228, 0.7); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1;">Growth manager with lived experience of the problem, strong community-building instincts and hands-on experience in events, influencers and brand-led growth.</p>
-                    <a href="https://www.linkedin.com/in/shinead-pond-b4b589204/" target="_blank" style="color: var(--cream); text-decoration: underline; font-size: 0.9rem;">LinkedIn &rarr;</a>
+                <!-- Event 2 -->
+                <div style="background: rgba(242,237,228,0.04); border-top: 4px solid var(--buzbo-red); padding: 2.5rem; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 1.5rem; right: 1.5rem; background: var(--buzbo-red); color: var(--cream); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; padding: 0.3rem 0.75rem;">DONE</div>
+                    <h3 style="font-size: 3.5rem; color: var(--cream); line-height: 1; margin-bottom: 0.25rem; font-family: var(--font-heading);">02</h3>
+                    <p style="color: var(--amber); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem;">The Hague — June</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(242,237,228,0.08); padding-bottom: 0.75rem;">
+                            <span style="color: rgba(240,236,228,0.5); font-size: 0.85rem;">Paid registrations</span>
+                            <span style="color: var(--cream); font-size: 1.5rem; font-family: var(--font-heading); font-weight: 700;">100</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(242,237,228,0.08); padding-bottom: 0.75rem;">
+                            <span style="color: rgba(240,236,228,0.5); font-size: 0.85rem;">Attendees</span>
+                            <span style="color: var(--cream); font-size: 1.5rem; font-family: var(--font-heading); font-weight: 700;">60</span>
+                        </div>
+                    </div>
                 </div>
-                <div style="background: rgba(242,237,228,0.05); padding: 2rem; border-top: 2px solid var(--charcoal); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
-                    <h4 style="font-size: 6rem; color: var(--cream); margin-bottom: 0; line-height: 1; font-family: var(--font-heading);">7</h4>
-                    <h4 style="font-size: 1.5rem; color: var(--cream); margin-bottom: 0.5rem; text-transform: none; line-height: 1.2; margin-top: 1rem;">Bootstrapped Team Members</h4>
-                    <p style="font-size: 1rem; color: var(--amber); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.5rem;">No payments, just a shared mission.</p>
-                </div>
+            </div>
+
+            <!-- View Playbook & Gallery CTA -->
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="color: rgba(240,236,228,0.5); font-size: 1rem; margin-bottom: 1.5rem; font-family: var(--font-heading); text-transform: none;">
+                    Want to see our upcoming event pipeline, photo gallery, and white-label playbook?
+                </p>
+                <a href="events.html" class="btn btn-outline" style="border-color: var(--buzbo-red); color: var(--cream);">EXPLORE TRACTION &amp; PLAYBOOK &rarr;</a>
             </div>
         </div>
     </section>
 
     <!-- Market Size -->
-    <section id="market" style="background-color: var(--dark-grey);">
+    <section id="market" style="background-color: var(--charcoal);">
         <div class="container">
             <div class="section-header" style="text-align: center;">
                 <span class="label">MARKET POTENTIAL</span>
@@ -323,147 +405,8 @@
         </div>
     </section>
 
-    <!-- 6. Events -->
-    <section id="events">
-        <div class="container">
-            <div class="section-header">
-                <span class="label">THE GTM WEDGE</span>
-                <h2 class="section-title">Events build the network.</h2>
-                <p class="event-intro">Why events? Events create trust, local density, content, and app conversion. This is the repeatable city playbook.</p>
-            </div>
-            <div class="swipe-hint"><i class="fa-solid fa-arrows-left-right"></i> Swipe to explore</div>
-            <div class="events-grid swipe-on-mobile">
-                <!-- Netherlands -->
-                <div class="event-card">
-                    <div class="event-country">The Netherlands</div>
-                    <div class="event-city">The Hague</div>
-                    <div class="event-date">
-                        <span class="date-text">30 Apr</span>
-                        <span class="status confirmed" style="background-color: transparent; border: 1px solid #4CAF50; color: #4CAF50;">130 REG, 70 ATTENDEES</span>
-                    </div>
-                    <div class="event-date"><span class="date-text">4 Jun</span><span class="status confirmed">CONFIRMED</span></div>
-                    <div class="event-date"><span class="date-text">9 Jul</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">13 Aug</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">The Netherlands</div>
-                    <div class="event-city">Amsterdam</div>
-                    <div class="event-date"><span class="date-text">18 Jun</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">30 Jul</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">10 Sep</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">The Netherlands</div>
-                    <div class="event-city">Rotterdam</div>
-                    <div class="event-date"><span class="date-text">2 Jul</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">6 Aug</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">17 Sep</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">The Netherlands</div>
-                    <div class="event-city">Utrecht</div>
-                    <div class="event-date"><span class="date-text">16 Jul</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">27 Aug</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">3 Oct</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">The Netherlands</div>
-                    <div class="event-city">Eindhoven</div>
-                    <div class="event-date"><span class="date-text">30 Jul</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">10 Sep</span><span class="status">PLANNED</span></div>
-                </div>
 
-                <!-- Germany -->
-                <div class="event-card">
-                    <div class="event-country">Germany</div>
-                    <div class="event-city">Berlin</div>
-                    <div class="event-date"><span class="date-text">9 Jul</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">13 Aug</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">24 Sep</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">Germany</div>
-                    <div class="event-city">Munich</div>
-                    <div class="event-date"><span class="date-text">23 Jul</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">3 Sep</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">15 Oct</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">Germany</div>
-                    <div class="event-city">Hamburg</div>
-                    <div class="event-date"><span class="date-text">6 Aug</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">17 Sep</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">29 Oct</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">Germany</div>
-                    <div class="event-city">Frankfurt</div>
-                    <div class="event-date"><span class="date-text">20 Aug</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">1 Oct</span><span class="status">PLANNED</span></div>
-                </div>
 
-                <!-- UK -->
-                <div class="event-card">
-                    <div class="event-country">UK</div>
-                    <div class="event-city">London</div>
-                    <div class="event-date"><span class="date-text">13 Aug</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">24 Sep</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">5 Nov</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">UK</div>
-                    <div class="event-city">Manchester</div>
-                    <div class="event-date"><span class="date-text">27 Aug</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">8 Oct</span><span class="status">PLANNED</span></div>
-                </div>
-                <div class="event-card">
-                    <div class="event-country">UK</div>
-                    <div class="event-city">Birmingham</div>
-                    <div class="event-date"><span class="date-text">10 Sep</span><span class="status">PLANNED</span></div>
-                    <div class="event-date"><span class="date-text">22 Oct</span><span class="status">PLANNED</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 7. Model -->
-    <section id="model" style="background-color: var(--dark-grey);">
-        <div class="container">
-            <div class="section-header">
-                <span class="label">MILESTONES & TARGETS</span>
-                <h2 class="section-title">The Path Forward</h2>
-            </div>
-            
-            <div class="swipe-hint"><i class="fa-solid fa-arrows-left-right"></i> Swipe to explore</div>
-            <div class="model-grid swipe-on-mobile" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; align-items: stretch;">
-                <div style="background-color: var(--charcoal); padding: 3rem; border-top: 4px solid var(--buzbo-red);">
-                    <h3 style="color: var(--cream); margin-bottom: 1rem; font-size: 2rem;">NOW</h3>
-                    <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">&bull; App live</p>
-                    <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">&bull; Revenue model validation</p>
-                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">&bull; Expand to another country</p>
-                    
-                    <h5 style="color: rgba(240, 236, 228, 0.5); text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); margin-bottom: 0.5rem;">USE OF FUNDS (€1M)</h5>
-                    <p style="font-size: 1rem; color: var(--text-light); line-height: 1.4;">
-                        Events (€100K) • Team (€430K) • App+AI (€120K)<br>Growth (€200K) • Buffer (€150K)
-                    </p>
-                </div>
-                <div style="background-color: var(--charcoal); padding: 3rem; border-top: 4px solid var(--amber);">
-                    <h3 style="color: var(--cream); margin-bottom: 1rem; font-size: 2rem;">TARGET: Q4 2026</h3>
-                    <p style="font-size: 1.1rem; margin-bottom: 0.5rem;">&bull; Min. 7,500 paid users a € 25,- per month</p>
-                    <p style="font-size: 1.1rem; margin-bottom: 2rem;">&bull; Real raise for expansion to the USA</p>
-                    
-                    <h5 style="color: rgba(240, 236, 228, 0.5); text-transform: uppercase; letter-spacing: 1px; font-family: var(--font-body); margin-bottom: 0.5rem;">WHAT THIS PROVES</h5>
-                    <p style="font-size: 1rem; color: var(--text-light); line-height: 1.4; margin-bottom: 0.5rem;">
-                        25 Events scaled across NL, DE, UK. App live and tested. Paid subscriptions proven.
-                    </p>
-                    <p style="font-size: 1rem; color: var(--amber); font-weight: bold; line-height: 1.4;">
-                        Target set: 2,25 mio ARR.
-                    </p>
-                </div>
-                <div style="background-image: url('2.png'); background-size: cover; background-position: center; border: 4px solid var(--dark-grey); filter: grayscale(10%); min-height: 300px;"></div>
-            </div>
-        </div>
-    </section>
 
     <!-- 8. Invest -->
     <section id="invest" style="background-color: var(--charcoal); padding-top: 6rem; padding-bottom: 6rem;">
@@ -473,22 +416,26 @@
                 
                 <div>
                     <span class="label" style="background-color: var(--cream); color: var(--buzbo-red); width: fit-content;">THE ASK</span>
-                    <h2 style="font-size: 5rem; color: var(--cream); font-family: var(--font-heading); line-height: 1; margin-top: 1rem; margin-bottom: 2rem;">JOIN THE VISION.</h2>
-                    <p style="font-size: 1.25rem; color: rgba(242,237,228,0.8); margin-bottom: 1.5rem;">We are scaling to 35M+ users, dominating the human-first hiring space, and working towards an IPO. The growth engine is proven.</p>
-                    <p style="font-size: 1.25rem; color: var(--amber); margin-bottom: 3rem; font-weight: bold;">Claim your stake in the next massive professional network.</p>
+                    <h2 style="font-size: 5rem; color: var(--cream); font-family: var(--font-heading); line-height: 1; margin-top: 1rem; margin-bottom: 2rem;">ONE INVESTOR. ONE SHOT.</h2>
+                    <p style="font-size: 1.25rem; color: rgba(242,237,228,0.8); margin-bottom: 1.5rem;">We are raising €300K from a single strategic investor — someone who believes in the mission, the team and the market. The growth engine is proven. This capital accelerates what's already moving.</p>
+                    <p style="font-size: 1.25rem; color: var(--amber); margin-bottom: 3rem; font-weight: bold;">Be the one who gets in first.</p>
                     
                     <div style="display: flex; flex-direction: column; gap: 2rem; margin-bottom: 2rem;">
                         <div class="invest-terms-row" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(242,237,228,0.1); padding-bottom: 1rem;">
                             <h5 style="text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; color: rgba(240, 236, 228, 0.5); margin: 0;">Instrument</h5>
-                            <p style="font-size: 2rem; font-family: var(--font-heading); font-weight: bold; color: var(--cream); margin: 0; line-height: 1;">SAFE (€1M)</p>
+                            <p style="font-size: 2rem; font-family: var(--font-heading); font-weight: bold; color: var(--cream); margin: 0; line-height: 1;">Convertible SAFE</p>
+                        </div>
+                        <div class="invest-terms-row" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(242,237,228,0.1); padding-bottom: 1rem;">
+                            <h5 style="text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; color: rgba(240, 236, 228, 0.5); margin: 0;">Amount</h5>
+                            <p style="font-size: 2rem; font-family: var(--font-heading); font-weight: bold; color: var(--cream); margin: 0; line-height: 1;">€300,000</p>
+                        </div>
+                        <div class="invest-terms-row" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(242,237,228,0.1); padding-bottom: 1rem;">
+                            <h5 style="text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; color: rgba(240, 236, 228, 0.5); margin: 0;">Investors</h5>
+                            <p style="font-size: 2rem; font-family: var(--font-heading); font-weight: bold; color: var(--cream); margin: 0; line-height: 1;">1 (one) investor</p>
                         </div>
                         <div class="invest-terms-row" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(242,237,228,0.1); padding-bottom: 1rem;">
                             <h5 style="text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; color: rgba(240, 236, 228, 0.5); margin: 0;">Valuation Cap</h5>
                             <p style="font-size: 2rem; font-family: var(--font-heading); font-weight: bold; color: var(--cream); margin: 0; line-height: 1;">€10M</p>
-                        </div>
-                        <div class="invest-terms-row" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(242,237,228,0.1); padding-bottom: 1rem;">
-                            <h5 style="text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; color: rgba(240, 236, 228, 0.5); margin: 0;">Allocation</h5>
-                            <p style="font-size: 2rem; font-family: var(--font-heading); font-weight: bold; color: var(--cream); margin: 0; line-height: 1;">Max 2 Tickets</p>
                         </div>
                         <div class="invest-terms-row" style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid rgba(242,237,228,0.1); padding-bottom: 1rem;">
                             <h5 style="text-transform: uppercase; font-size: 1rem; letter-spacing: 2px; color: rgba(240, 236, 228, 0.5); margin: 0;">Structure</h5>
@@ -558,14 +505,15 @@
                 <div class="faq-answer">
                     <p style="font-weight:bold; margin-bottom:0.5rem; color:var(--cream);">Events:</p>
                     <ul>
-                        <li>First Buzbo event, April 30 — 130 registrations, 70 attendees. Target was 50.</li>
-                        <li>Event 2, June 4 — 20 paid registrations and growing.</li>
+                        <li>Event 1 (The Hague, April 30) — 130 registrations, 60 attendees. Target was 50.</li>
+                        <li>Event 2 — 100 paid registrations, 60 attendees. Higher quality room: founders, investors, business managers. On-the-spot matching happened.</li>
+                        <li>Upcoming: Amsterdam (confirmed), The Hague ×2 (confirmed), Rotterdam (in talks), Amsterdam Tech Week.</li>
                     </ul>
                     <p style="font-weight:bold; margin-top:1rem; margin-bottom:0.5rem; color:var(--cream);">Community:</p>
                     <ul>
-                        <li>260 total across waitlist and co-build</li>
-                        <li>20 active investor conversations</li>
-                        <li>10-person team, bootstrapped</li>
+                        <li>300+ across waitlist and co-build community</li>
+                        <li>Active investor conversations ongoing</li>
+                        <li>Full team of 7+ contributors, all unpaid, all committed</li>
                     </ul>
                     <p style="margin-top:1rem;">Next proof: app launch, matching, first paid users.</p>
                 </div>
@@ -610,9 +558,10 @@
                 <button class="faq-question">Why this team? <span>+</span></button>
                 <div class="faq-answer">
                     <ul>
-                        <li><strong>Anouk (CEO):</strong> top-sport mentality, serial entrepreneur, ambitious leader.</li>
-                        <li><strong>Shinead (Growth Manager):</strong> owns community strategy, events and social.</li>
-                        <li>Plus 7 contributors building on belief, mostly deferred compensation.</li>
+                        <li><strong>Anouk (CEO):</strong> Serial entrepreneur, elite athlete mentality. Built multiple businesses. Now fully committed to making global impact in the professional space.</li>
+                        <li><strong>Shinead (Growth Manager):</strong> Expert in marketing, community and social. Drives all events, brand and organic acquisition.</li>
+                        <li><strong>Tommy (CTO):</strong> Expert in scaling software. Built applications with 60K+ users. Brings the technical architecture to go global.</li>
+                        <li>Plus a committed crew of contributors — community, content, design, ops — all unpaid, all in on the mission.</li>
                     </ul>
                     <p style="margin-top:1rem;">In their minds, the IPO is already a fact — now it's just execution. Capital will not create the momentum. It will accelerate what's already moving.</p>
                 </div>
@@ -689,7 +638,7 @@
             <div class="footer-links">
                 <a href="https://www.buzbo.com/" target="_blank" aria-label="Website"><i class="fa-solid fa-globe" style="font-size: 1.5rem;"></i></a>
                 <a href="mailto:hello@buzbo.com" aria-label="Email"><i class="fa-solid fa-envelope" style="font-size: 1.5rem;"></i></a>
-                <a href="https://www.linkedin.com/in/anouk-horrevorts-76a5b542/" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" style="font-size: 1.5rem;"></i></a>
+                <a href="https://www.linkedin.com/company/buzbo" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin" style="font-size: 1.5rem;"></i></a>
                 <a href="https://www.instagram.com/joinbuzbo/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram" style="font-size: 1.5rem;"></i></a>
                 <a href="https://www.tiktok.com/@joinbuzbo" target="_blank" aria-label="TikTok"><i class="fa-brands fa-tiktok" style="font-size: 1.5rem;"></i></a>
             </div>
@@ -712,6 +661,22 @@
                 }
             });
         });
+
+        // Password-Protected Excel Download Gate
+        function accessFinancials() {
+            const pw = prompt("Voer het wachtwoord in om het financieel model te downloaden:");
+            if (pw === "investnow2026") {
+                alert("Wachtwoord correct! Het downloaden begint nu.");
+                const link = document.createElement("a");
+                link.href = "Finance/Buzbo_Budget_2026_v2.xlsx";
+                link.download = "Buzbo_Budget_2026_v2.xlsx";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } else if (pw !== null) {
+                alert("Onjuist wachtwoord. Vraag toegang aan via hello@buzbo.com.");
+            }
+        }
     </script>
 </body>
 </html>
